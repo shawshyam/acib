@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>Web Page with Menu & Slider</title>
+
+       <style>
+              * {
+                     margin: 0;
+                     padding: 0;
+                     box-sizing: border-box;
+                     font-family: Arial, sans-serif;
+              }
+
+              body {
+                     background-color: #f4f4f4;
+                     position: relative;
+              }
+
+              .preloader {
+                     position: fixed;
+                     top: 0;
+                     left: 0;
+                     width: 100%;
+                     height: 100%;
+                     background: radial-gradient(circle, #ffffff, #e6e6fa);
+                     /* Light gradient effect */
+                     display: flex;
+                     flex-direction: column;
+                     justify-content: center;
+                     align-items: center;
+                     z-index: 3000;
+              }
+
+              /* Logo & Rotating Ring */
+              .preloader .logo-container {
+                     position: relative;
+                     width: 100px;
+                     height: 100px;
+              }
+
+              .preloader img {
+                     width: 80px;
+                     height: auto;
+                     border-radius: 50px;
+                     position: absolute;
+                     top: 50%;
+                     left: 50%;
+                     transform: translate(-50%, -50%);
+              }
+
+              /* Rotating Ring */
+              .loader-ring {
+                     width: 100px;
+                     height: 100px;
+                     border: 5px solid transparent;
+                     border-top: 5px solid #6a5acd;
+                     border-radius: 50%;
+                     animation: spin 1.5s linear infinite;
+              }
+
+              /* Bouncing Bubbles */
+              .bubbles {
+                     display: flex;
+                     gap: 8px;
+                     margin-top: 20px;
+              }
+
+              .bubbles div {
+                     width: 14px;
+                     height: 14px;
+                     background: #6a5acd;
+                     border-radius: 50%;
+                     animation: bubble 1.5s infinite ease-in-out;
+                     box-shadow: 0 0 10px #6a5acd;
+              }
+
+              .bubbles div:nth-child(1) {
+                     animation-delay: 0s;
+              }
+
+              .bubbles div:nth-child(2) {
+                     animation-delay: 0.2s;
+              }
+
+              .bubbles div:nth-child(3) {
+                     animation-delay: 0.4s;
+              }
+
+              /* Loading Text */
+              .preloader span {
+                     font-size: 20px;
+                     font-weight: bold;
+                     color: #6a5acd;
+                     margin-top: 10px;
+                     animation: fadeInOut 1.5s infinite alternate;
+              }
+
+              /* Animations */
+              @keyframes spin {
+                     0% {
+                            transform: rotate(0deg);
+                     }
+
+                     100% {
+                            transform: rotate(360deg);
+                     }
+              }
+
+              @keyframes bubble {
+
+                     0%,
+                     100% {
+                            transform: translateY(0);
+                            opacity: 0.6;
+                     }
+
+                     50% {
+                            transform: translateY(-12px);
+                            opacity: 1;
+                     }
+              }
+
+              @keyframes fadeInOut {
+                     0% {
+                            opacity: 0.6;
+                     }
+
+                     100% {
+                            opacity: 1;
+                     }
+              }
+
+
+
+
+              header {
+                     display: flex;
+                     align-items: center;
+                     padding: 15px 20px;
+                     background-color: #fff;
+                     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                     position: relative;
+                     z-index: 1000;
+              }
+
+              .menu-logo {
+                     height: 0px;
+                     display: flex;
+                     align-items: center;
+                     gap: 10px;
+              }
+
+              .menu,
+              .logo {
+                     border-radius: 50px;
+                     width: 40px;
+                     height: 40px;
+                     background-color: #6a5acd;
+                     color: white;
+                     display: flex;
+                     justify-content: center;
+                     align-items: center;
+                     border-radius: 5px;
+                     font-weight: bold;
+                     cursor: pointer;
+              }
+
+              .login-btn {
+                     margin-left: auto;
+                     background-color: #6a5acd;
+                     color: white;
+                     padding: 10px 15px;
+                     border: none;
+                     border-radius: 5px;
+                     cursor: pointer;
+                     transition: background 0.3s;
+              }
+
+              .login-btn:hover {
+                     background-color: #5a4acb;
+              }
+
+              .menu-options {
+                     position: fixed;
+                     top: 0;
+                     left: -250px;
+                     width: 250px;
+                     height: 100vh;
+                     background-color: #333;
+                     color: white;
+                     padding: 20px;
+                     transition: left 0.3s ease-in-out;
+                     z-index: 2000;
+              }
+
+              .menu-options ul {
+                     list-style: none;
+                     padding: 0;
+              }
+
+              .menu-options ul li {
+                     padding: 10px 0;
+                     border-bottom: 1px solid #444;
+                     cursor: pointer;
+                     transition: background 0.3s;
+              }
+
+              .menu-options ul li:hover {
+                     background-color: #555;
+              }
+
+              .close-menu {
+                     position: absolute;
+                     top: 10px;
+                     right: 10px;
+                     cursor: pointer;
+                     background-color: rgb(13, 13, 13);
+                     padding: 5px 10px;
+                     border-radius: 5px;
+              }
+
+              .slider {
+                     width: 100%;
+                     overflow: hidden;
+                     position: relative;
+                     margin-top: 10px;
+                     z-index: 1;
+              }
+
+              .slides {
+                     display: flex;
+                     width: 500%;
+                     transition: transform 1s ease-in-out;
+              }
+
+              .slides img {
+                     width: 20%;
+                     height: auto;
+                     /* object-fit: cover; */
+              }
+
+
+              .about-section {
+                     margin: 10px auto;
+                     padding: 20px;
+                     background: rgba(255, 255, 255, 0.671);
+                     border-radius: 10px;
+                     width: 90%;
+                     text-align: justify;
+                     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+                     background-color: rgb(72, 209, 209);
+              }
+
+
+              .about {
+                     margin-top: 180px;
+                     padding: 50px 20px;
+                     background: #f8f9fa;
+                     text-align: center;
+              }
+
+              .about h2 {
+                     font-size: 32px;
+                     font-weight: bold;
+                     margin-bottom: 20px;
+                     text-align: center;
+
+              }
+
+              .about p {
+                     font-size: 11px;
+                     max-width: 100px;
+                     margin: auto;
+                     line-height: 0;
+              }
+
+
+              .courses {
+                     text-align: center;
+                     padding: 0px 20px;
+                     background-color: #fff;
+                     margin-top: 10px;
+              }
+
+              .course-list {
+                     display: flex;
+                     justify-content: center;
+                     gap: 30px;
+                     flex-wrap: wrap;
+              }
+
+              .course {
+                     width: 300px;
+                     background: #fff;
+                     padding: 20px;
+                     border-radius: 10px;
+                     text-align: center;
+                     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                     transition: transform 0.3s ease, box-shadow 0.3s ease;
+              }
+
+              .course:hover {
+                     transform: translateY(-5px);
+                     box-shadow: 0 28px 46px rgba(0, 0, 0, 0.2);
+              }
+
+              .course img {
+                     width: 100%;
+                     height: 180px;
+                     border-radius: 10px;
+                     margin-bottom: 10px;
+                     transition: transform 0.3s ease;
+              }
+
+              .course:hover img {
+                     transform: scale(1.05);
+              }
+
+              .course-description {
+                     margin: 10px 0;
+                     font-size: 14px;
+                     color: #666;
+              }
+
+              .enroll-btn {
+                     width: 99%;
+                     padding: 10px 15px;
+                     background-color: #6a5acd;
+                     color: white;
+                     border: none;
+                     border-radius: 5px;
+                     cursor: pointer;
+                     font-size: 16px;
+                     transition: background 0.3s ease;
+              }
+
+              .enroll-btn:hover {
+                     background-color: #5a4acb;
+              }
+
+              @media (max-width: 768px) {
+                     .login-btn {
+                            padding: 8px 12px;
+                     }
+
+                     .menu,
+                     .logo {
+                            width: 35px;
+                            height: 35px;
+                     }
+
+                     .course {
+                            width: 90%;
+                            margin-bottom: 20px;
+                     }
+              }
+
+              footer {
+                     text-align: center;
+                     padding: 10px;
+                     background: #333;
+                     color: white;
+                     /* position: fixed; */
+                     bottom: 0;
+                     width: 100%;
+              }
+       </style>
+</head>
+
+<body onload="hidePreloader()">
+       <div class="preloader" id="preloader">
+              <div class="logo-container">
+                     <div class="loader-ring"></div> <!-- Rotating Ring -->
+                     <img onclick="home()" src="./image/logo.png" alt="Logo"> <!-- Apna Logo Yaha Lagayein -->
+              </div>
+              <div class="bubbles">
+                     <div></div>
+                     <div></div>
+                     <div></div>
+              </div>
+              <span>Loading...</span>
+       </div>
+
+       <header>
+              <div class="menu-logo">
+                     <div class="menu" onclick="openMenu()">☰</div>
+                     <img class="logo" src="./image/logo.png" alt="">
+              </div>
+              <button onclick="registerLogin()" class="login-btn">Login/Register</button>
+       </header>
+
+       <div class="menu-options" id="menuOptions">
+              <div class="close-menu" onclick="closeMenu()">✖</div>
+              <ul>
+                     <li onclick="showHome()">Home</li>
+                     <li onclick="teacherLogin()">Teacher Login</li>
+                     <li onclick="exam()">Exam</li>
+                     <li>Contact</li>
+              </ul>
+       </div>
+
+       <div class="slider" id="homePage">
+              <div class="slides" id="slides">
+                     <img src="./image/s1.jpg" alt="Slide 1">
+                     <img src="./image/p1.jpg" alt="Slide 2">
+                     <img src="./image/s2.png" alt="Slide 3">
+                     <img src="./image/p1.jpg" alt="Slide 4">
+                     <img src="./image/s1.jpg" alt="Slide 5">
+              </div>
+              <div class="about-section">
+                     <h2>About Us</h2>
+                     <p>Welcome to Aryabhatta Coaching Institute, Baharagora, a trusted name in quality education. We
+                            provide
+                            comprehensive coaching for students from Class 8 to ISC and BSc, ensuring a strong academic
+                            foundation and
+                            excellent results.
+
+                            
+              </div>
+
+              <div class="courses">
+                     <h2>Our Courses</h2>
+                     <div class="course-list">
+                            <span class="course">
+                                   <img src="./image/c1.png" alt="Course 1">
+                                   <p class="course-description">Mathematics</p>
+                                   <button class="enroll-btn">Enroll Now</button>
+                            </span>
+                            <span class="course">
+                                   <img src="./image/c22.png" alt="Course 2">
+                                   <p class="course-description">Physics</p>
+                                   <button class="enroll-btn">Enroll Now</button>
+                            </span>
+                            <span class="course">
+                                   <img src="./image/c33.png" alt="Course 3">
+                                   <p class="course-description">Mathematics</p>
+                                   <a href="result.html"><button class="enroll-btn">Enroll Now</button></a>
+                            </span>
+                            <div class="course">
+                                   <img src="./image/c45.png" alt="Course 1">
+                                   <p class="course-description">Biology</p>
+                                   <button onclick="update()" class="enroll-btn">Enroll Now</button>
+
+                            </div>
+                            <div class="course">
+                                   <img src="./image/c46.jpg" alt="Course 2">
+                                   <p class="course-description">Computer science</p>
+                                   <button onclick="update()" class="enroll-btn">Enroll Now</button>
+                            </div>
+                            <div class="course">
+                                   <img src="./image/c55.png" alt="Course 3">
+                                   <p class="course-description">English</p>
+                                   <button onclick="update()" class="enroll-btn">Enroll Now</button>
+                            </div>
+                            <div class="course">
+                                   <img src="./image/c66.png" alt="Course 3">
+                                   <p class="course-description">English</p>
+                                   <button onclick="update()" class="enroll-btn">Enroll Now</button>
+                            </div>
+                     </div>
+                     <footer>
+                            © 2025 Aryabhatta Coaching Institute, Baharagora. All Rights Reserved.
+                     </footer>
+              </div>
+
+              <script>
+                     function hidePreloader() {
+                            setTimeout(() => {
+                                   document.getElementById("preloader").style.display = "none";
+                            }, 2000); // 2 seconds delay for preloader
+                     }
+                     function registerLogin() {
+                            // Preloader show kare
+                            document.getElementById('preloader').style.display = 'flex';
+
+                            // 2 second baad new page open kare
+                            setTimeout(function () {
+                                   window.location.href = "index.html.html"; // Yaha apna page ka naam rakho
+                            }, 2000);
+
+                     }
+
+
+                     function openMenu() {
+                            document.getElementById("menuOptions").style.left = "0";
+                     }
+                     function closeMenu() {
+                            document.getElementById("menuOptions").style.left = "-250px";
+                     }
+                     function showHome() {
+                            document.getElementById("menuOptions").style.left = "-250px";
+                            window.scrollTo(0, 0);
+                     }
+                     function registerLogin() {
+                            // Preloader show kare
+                            document.getElementById('preloader').style.display = 'flex';
+
+                            // 2 second baad new page open kare
+                            setTimeout(function () {
+                                   window.location.href = "loginPage.html"; // Yaha apna page ka naam rakho
+                            }, 2000);
+
+                     }
+                     function update() {
+                            // Preloader show kare
+                            document.getElementById('preloader').style.display = 'flex';
+
+                            // 2 second baad new page open kare
+                            setTimeout(function () {
+                                   window.location.href = "result.html"; // Yaha apna page ka naam rakho
+                            }, 2000);
+
+                     }
+
+                     function teacherLogin() {
+                            // Preloader show kare
+                            document.getElementById('preloader').style.display = 'flex';
+
+                            // 2 second baad new page open kare
+                            setTimeout(function () {
+                                   window.location.href = "teacher.html"; // Yaha apna page ka naam rakho
+                            }, 2000);
+                     }
+                     function exam() {
+                            // Preloader show kare
+                            document.getElementById('preloader').style.display = 'flex';
+
+                            // 2 second baad new page open kare
+                            setTimeout(function () {
+                                   window.location.href = "exam.html"; // Yaha apna page ka naam rakho
+                            }, 2000);
+                     }
+                     let index = 0;
+                     function slideImages() {
+                            const slides = document.getElementById("slides");
+                            const totalSlides = document.querySelectorAll(".slides img").length;
+                            index = (index + 1) % totalSlides;
+                            slides.style.transform = `translateX(-${index * 20}%)`;
+                     }
+                     setInterval(slideImages, 3000); // 3 seconds pause before sliding
+              </script>
+</body>
+
+</html>

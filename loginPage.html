@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Register</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            background: #ffffff;
+        }
+        .header {
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+            background: #007bff;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .header img {
+            width: 50px;
+            border-radius: 50px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+        .container {
+            width: 400px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+        h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        .input-box {
+            position: relative;
+            margin: 20px 0;
+            text-align: left;
+        }
+        .input-box input, .input-box select {
+            width: 100%;
+            padding: 10px;
+            background: #f5f5f5;
+            border: 2px solid #007bff;
+            outline: none;
+            border-radius: 5px;
+            color: #007bff;
+            font-size: 16px;
+        }
+        .btn {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background: #007bff;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+        .toggle {
+            margin-top: 15px;
+            color: #007bff;
+            cursor: pointer;
+        }
+        .toggle:hover {
+            text-decoration: underline;
+        }
+        .subjects {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .subject-option {
+            display: flex;
+            align-items: center;
+        }
+        .subject-option input {
+            margin-right: 10px;
+        }
+        @media (max-width: 450px) {
+            .container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="./image/logo.png" alt="Logo"> ACIB
+    </div>
+    <div class="container" id="form-container">
+        <h2 id="form-title">Login</h2>
+        <div id="login-form">
+            <div class="input-box">
+                <input type="text" id="username" placeholder="Username">
+            </div>
+            <div class="input-box">
+                <input type="password" id="password" placeholder="Password">
+            </div>
+        </div>
+        <div id="register-form" style="display: none;">
+            <div class="input-box">
+                <input type="text" id="name" placeholder="Full Name">
+            </div>
+            <div class="input-box">
+                <input type="email" id="email" placeholder="Email">
+            </div>
+            <div class="input-box">
+                <input type="text" id="mobile" placeholder="Mobile Number">
+            </div>
+            <div class="input-box">
+                <input type="password" id="reg-password" placeholder="Password">
+            </div>
+            <div class="input-box">
+                <select id="class">
+                    <option value="">Select Class</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                </select>
+            </div>
+            <!-- <div class="input-box">
+                <label>Select Subjects:</label>
+                <div class="subjects">
+                    <div class="subject-option"><input type="checkbox" name="subject" value="Physics"> <label>Physics</label></div>
+                    <div class="subject-option"><input type="checkbox" name="subject" value="Chemistry"> <label>Chemistry</label></div>
+                    <div class="subject-option"><input type="checkbox" name="subject" value="Math"> <label>Math</label></div>
+                    <div class="subject-option"><input type="checkbox" name="subject" value="Biology"> <label>Biology</label></div>
+                    <div class="subject-option"><input type="checkbox" name="subject" value="Computer Science"> <label>Computer Science</label></div>
+                    <div class="subject-option"><input type="checkbox" name="subject" value="English"> <label>English</label></div>
+                </div>
+            </div> -->
+        </div>
+        <button class="btn">Submit</button>
+        <p class="toggle" onclick="toggleForm()">New user? Register here</p>
+    </div>
+    <script>
+        function toggleForm() {
+            let title = document.getElementById('form-title');
+            let loginForm = document.getElementById('login-form');
+            let registerForm = document.getElementById('register-form');
+            let toggleText = document.querySelector('.toggle');
+            
+            if (title.innerText === 'Login') {
+                title.innerText = 'Register';
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+                toggleText.innerText = 'Already have an account? Login here';
+            } else {
+                title.innerText = 'Login';
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+                toggleText.innerText = 'New user? Register here';
+            }
+        }
+    </script>
+</body>
+</html>
